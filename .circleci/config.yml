@@ -26,7 +26,9 @@ workflows:
           requires:
             - hold-apply
       - terraform plan -destroy -out tfdestroy
-          path: .
+          checkout: true
+          context: terraform
+          persist-workspace: true
           requires:
             - terraform/apply
       - hold-destory:
