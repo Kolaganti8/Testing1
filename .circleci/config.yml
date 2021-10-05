@@ -22,7 +22,7 @@ workflows:
           context: terraform
           filters:
             branches:
-              only: master
+              only: main
           requires:
             - hold-apply
       - hold-destory:
