@@ -27,8 +27,6 @@ jobs:
       - terraform/destroy:
           path: .
     working_directory: ~/src
-          requires:
-             - hold-destory
 workflows:
   single-job-lifecycle:
     jobs:
