@@ -27,10 +27,14 @@ workflows:
               only: main
           requires:
             - hold-apply
+      - terraform/init:
+          path: .
+          requires:
+            - terraform/apply
       - hold-destory:
           type: approval
           requires:
-            - terraform/apply
+            - terraform/init
       - terraform/destroy:
           attach-workspace: true
           context: terraform
