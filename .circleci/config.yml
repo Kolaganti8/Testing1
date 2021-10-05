@@ -1,33 +1,27 @@
 version: 2.1
 orbs:
   terraform: circleci/terraform@3.0.0
-jobs:
-  single-job-lifecycle:
-    executor: terraform/default
-    steps:
-      - checkout
-      - terraform/init:
-          path: .
+workflows:
+  deploy_infrastructure:
+    jobs:
       - terraform/validate:
-          path: .
-      - terraform/fmt:
-          path: .
+          checkout: true
+          context: terraform
       - terraform/plan:
-          path: .
+          checkout: true
+          context: terraform
+          persist-workspace: true
+          requires:
+            - terraform/validate
       - hold-apply:
           type: approval
           requires:
             - terraform/plan
       - terraform/apply:
-          path: .
-      - hold-destory:
-          type: approval
+          attach-workspace: true
+          context: terraform
+          filters:
+            branches:
+              only: master
           requires:
-            - terraform/apply
-      - terraform/destroy:
-          path: .
-    working_directory: ~/src
-workflows:
-  single-job-lifecycle:
-    jobs:
-      - single-job-lifecycle
+            - hold-apply
