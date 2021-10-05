@@ -25,7 +25,7 @@ workflows:
               only: main
           requires:
             - hold-apply
-      - terraform init -migrate-state:
+      - terraform plan -destroy -out tfdestroy:
           path: .
           requires:
             - terraform/apply
