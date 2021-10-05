@@ -31,8 +31,6 @@ workflows:
             - terraform/apply
       - hold-destory:
           type: approval
-          requires:
-            - terraform/init
       - terraform/destroy:
           attach-workspace: true
           context: terraform
