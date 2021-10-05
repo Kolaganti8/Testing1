@@ -4,8 +4,6 @@ orbs:
 workflows:
   deploy_infrastructure:
     jobs:
-      - terraform/init:
-          path: .
       - terraform/validate:
           checkout: true
           context: terraform
